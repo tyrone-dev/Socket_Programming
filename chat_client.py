@@ -66,6 +66,7 @@ if __name__ == "__main__":
 				prompt()
 
 	# eventually close socket
-	# client_socket.close()
+	client_socket.close()
+	# after connect with server send hostname
 
 
