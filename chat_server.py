@@ -15,7 +15,7 @@ def broadcast_msg(client_sock, msg):
 	for socket in CONNECTION_LIST:
 		if socket != server_socket and socket != client_sock:
 			try:
-				socket.send(message)
+				socket.send(msg)
 
 			except:
 				# if the send fails, that client is assumed dead and connection is closed
@@ -59,7 +59,7 @@ if __name__ == "__main__":
 				print 'Client (%s, %s) connected' % addr
 
 				# broadcast the connection message of new client joining the chat party
-				broadcast_msg(new_client_sock, '[%s:%server_socket] entered the room\n' % addr)
+				broadcast_msg(new_client_sock, ('[%s:%s] entered the room\n' % addr))
 
 			else:
 				# not a new client, but a message from an existing client
@@ -69,11 +69,11 @@ if __name__ == "__main__":
 					data_from_client = sock.recv(recv_buff)
 					if data_from_client:
 						# broadcast the message to all other clients
-						broadcast_msg(sock, '\r' + '<' + str(sock.getpeername()) + '>' + data)
+						broadcast_msg(sock, '\r' + '<' + str(sock.getpeername()) + '>' + data_from_client)
 
 				except:
 					# if fails
-					broadcast_msg(sock, "Client (%s, %s) is offline" % addr)
+					broadcast_msg(sock, ("Client (%s, %s) is offline" % addr))
 					print "Client (%s, %s) is offline" % addr
 					#close the client socket
 					sock.close()
@@ -82,6 +82,7 @@ if __name__ == "__main__":
 					continue
 	# eventually close the socket
 	server_socket.close()
+# use dictionary matching IP to hostnames?
 
 
 
