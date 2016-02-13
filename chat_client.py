@@ -11,9 +11,13 @@ import select # to monitor sockets and file descriptors simultaneously
 			  # to check for some activity
 import string
 import sys # for stdin (input) file descriptor
+from datetime import datetime
 
 def prompt():
 	# function to display client's own text to terminal
+	now = datetime.now()
+	time = "%s:%s:%s" % (now.hour, now.minute, now.second)
+	sys.stdout.write(time)
 	sys.stdout.write('<You> ')
 	sys.stdout.flush()
 

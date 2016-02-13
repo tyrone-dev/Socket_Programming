@@ -7,6 +7,7 @@ chat server must perform two functions:
 '''
 import socket #for sockets
 import select #for multiplexing
+from datetime import datetime
 
 # broadcast function - broadcasts message to all connected clients
 def broadcast_msg(client_sock, msg):
@@ -69,7 +70,9 @@ if __name__ == "__main__":
 					data_from_client = sock.recv(recv_buff)
 					if data_from_client:
 						# broadcast the message to all other clients
-						broadcast_msg(sock, '\r' + '<' + str(sock.getpeername()) + '>' + data_from_client)
+						now = datetime.now()
+						time = "%s:%s:%s" % (now.hour, now.minute, now.second)
+						broadcast_msg(sock, '\r' +'['+ time + '] ' + '<' + str(sock.getpeername()) + '>' + data_from_client)
 
 				except:
 					# if fails
